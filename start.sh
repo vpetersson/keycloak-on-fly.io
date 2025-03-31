@@ -2,12 +2,9 @@
 
 # Configure Keycloak in a Fly.io friendly fashion.
 export JAVA_OPTS_APPEND="-Djava.net.preferIPv4Stack=false"
-#export JAVA_OPTS_KC_HEAP="-XX:MaxHeapFreeRatio=30 -XX:MaxRAMPercentage=65"
 
 # Database config
 export KC_DB=postgres
-
-export KC_HOSTNAME_STRICT=false
 
 ## Regular expression to extract username, password and database
 regex="postgres://([^:]+):([^@]+)@([^/]+)/([^?]+)"
