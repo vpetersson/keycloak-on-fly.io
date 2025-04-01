@@ -16,10 +16,13 @@ Inspiration for settings are drawn from [this forum post](https://community.fly.
 * Run `fly certs add PUBLIC_HOSTNAME` to begin the TLS certificate process (again, leave out the `https://` part)
 * Run `fly deploy --ha=false` to launch the application
 * Run `fly logs` and look for the line `Log in to admin using [...]`, which will tell you the temporary admin credentials
+  * Use those credentials to log into admin and set up your own user account
 * Enable the `--optimized` setting by setting `fly secrets set OPTIMIZED=true`
 * Finally, move to HA mode by running `fly deploy --ha=true`
 
-Note that the initial `boostrap-admin` command takes several minutes to load.
+## Outstanding issues
+
+* If you look at the [Exposed path recommendations](https://www.keycloak.org/server/reverseproxy#_exposed_path_recommendations), it is recommended that you only expose certain paths to the world. While you can re-route the admin interface to a different URL using `ADMIN_HOSTNAME`, it is still recommended that you hide `/`.
 
 ## Development
 
