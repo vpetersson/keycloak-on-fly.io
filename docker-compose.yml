@@ -1,7 +1,7 @@
 ---
 services:
   pg_db:
-    image: postgres:15-alpine
+    image: postgres:alpine
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-my_user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-my_password}
@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-my_user}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-my_user} -d ${POSTGRES_DB:-my_db}"]
       interval: 10s
       timeout: 2s
       retries: 10
@@ -21,7 +21,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: postgres://my_user:my_password@pg_db/my_db?sslmode=disable
+      DATABASE_URL: postgres://${POSTGRES_USER:-my_user}:${POSTGRES_PASSWORD:-my_password}@pg_db/${POSTGRES_DB:-my_db}?sslmode=disable
+      PUBLIC_HOSTNAME: https://localhost:8080
     depends_on:
       pg_db:
         condition: service_healthy
